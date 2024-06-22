@@ -51,15 +51,15 @@
  * @brief Audio Codec Chip Function Definition
  */
 #define FUNC_AUDIO_CODEC_EN       (1)
-#define ES7243_MCLK_GPIO          GPIO_NUM_0
-#define HEADPHONE_DETECT          GPIO_NUM_19
-#define PA_ENABLE_GPIO            GPIO_NUM_21
+#define ES7243_MCLK_GPIO          GPIO_NUM_3
+#define HEADPHONE_DETECT          GPIO_NUM_36
+#define PA_ENABLE_GPIO            GPIO_NUM_36
 #define ES8311_MCLK_SOURCE        0   /* 0 From MCLK of esp32   1 From BCLK */
 #define CODEC_ADC_I2S_PORT        (1)
 #define CODEC_ADC_BITS_PER_SAMPLE (16) /* 16bit */
 #define CODEC_ADC_SAMPLE_RATE     (16000)
 #define RECORD_HARDWARE_AEC       (true)
-#define BOARD_PA_GAIN             (20) /* Power amplifier gain defined by board (dB) */
+#define BOARD_PA_GAIN             (8) /* Power amplifier gain defined by board (dB) */
 
 extern audio_hal_func_t AUDIO_CODEC_ES8311_DEFAULT_HANDLE;
 extern audio_hal_func_t AUDIO_CODEC_ES7243_DEFAULT_HANDLE;

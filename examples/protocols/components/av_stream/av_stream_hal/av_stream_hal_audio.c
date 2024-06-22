@@ -119,7 +119,7 @@ static audio_board_handle_t i2s_device_init(uint32_t sample_rate)
 #endif
 
     audio_hal_ctrl_codec(board_handle->audio_hal, AUDIO_HAL_CODEC_MODE_BOTH, AUDIO_HAL_CTRL_START);
-    audio_hal_set_volume(board_handle->audio_hal, 75);
+    audio_hal_set_volume(board_handle->audio_hal, 85);
     return board_handle;
 }
 

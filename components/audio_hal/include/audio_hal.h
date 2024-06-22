@@ -33,7 +33,7 @@
 extern "C" {
 #endif
 
-#define AUDIO_HAL_VOL_DEFAULT 70
+#define AUDIO_HAL_VOL_DEFAULT 100
 
 typedef struct audio_hal *audio_hal_handle_t;
 

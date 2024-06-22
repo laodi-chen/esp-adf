@@ -44,10 +44,14 @@
 #include "esp_camera.h"
 #include "esp_timer.h"
 #include "av_stream.h"
+#include "esp_alc.h"
+#include <math.h>
 
 static const char *TAG = "AV_STREAM";
 
 const int ENCODER_STOPPED_BIT = BIT0;
+
+void *alc_handle;
 
 struct _av_stream_handle {
     bool venc_run;
@@ -190,6 +194,19 @@ static int audio_read_cb(audio_element_handle_t el, char *buf, int len, TickType
     return _read_audio(av_stream, buf, len, wait_time);
 }
 
+// 计算分贝函数
+float calculate_db(const int16_t *buffer, size_t len) {
+    if (len == 0) return -INFINITY;  // 防止除以零
+    double sum_db = 0;
+    for (size_t i = 0; i < len; i++) {
+        double sample_val = buffer[i];
+        double sample_db = 20.0 * log10(fabs(sample_val) / 32768.0);
+        sum_db += sample_db;
+    }
+    return (float) (sum_db / len);  // 返回平均分贝值
+}
+
+
 static void _audio_enc(void* pv)
 {
     av_stream_handle_t av_stream = (av_stream_handle_t) pv;
@@ -214,6 +231,15 @@ static void _audio_enc(void* pv)
         } else if (read_len < 0) {
             break;
         }
+
+        alc_volume_setup_process(frame_buf, read_len, 1, alc_handle, 300);
+
+        // 调整长度以适应16位样本的数量
+        // int num_samples = read_len / sizeof(int16_t);
+
+        // // 计算平均分贝值
+        // float average_db = calculate_db(g711_buffer_16, num_samples);
+        // ESP_LOGI(TAG, "Average dB level: %f dB", average_db);
 
         av_stream_frame_t enc;
         enc.len = read_len;
@@ -265,6 +291,8 @@ int av_audio_enc_start(av_stream_handle_t av_stream)
     if (av_stream->aenc_run) {
         return ESP_OK;
     }
+
+    alc_handle = alc_volume_setup_open();
 
     if (av_stream->config.acodec_type == AV_ACODEC_AAC_LC) {
         // esp_aac_enc_config_t aac_cfg = DEFAULT_ESP_AAC_ENC_CONFIG();
@@ -422,6 +450,8 @@ int av_audio_enc_stop(av_stream_handle_t av_stream)
         return ESP_OK;
     }
 
+    alc_volume_setup_close(alc_handle);
+
     av_stream->aenc_run = false;
     audio_pipeline_stop(av_stream->audio_enc);
     audio_pipeline_wait_for_stop(av_stream->audio_enc);
@@ -460,6 +490,17 @@ int av_audio_enc_stop(av_stream_handle_t av_stream)
     return ESP_OK;
 }
 
+float calculate_average_db(int16_t *buffer, int num_samples) {
+    if (num_samples == 0) return -INFINITY;
+    double sum_db = 0.0;
+    for (int i = 0; i < num_samples; i++) {
+        double sample_val = buffer[i];
+        double sample_db = 20.0 * log10(fabs(sample_val) / 32768.0);
+        sum_db += sample_db;
+    }
+    return (float) (sum_db / num_samples);
+}
+
 static void _audio_dec(void* pv)
 {
     av_stream_handle_t av_stream = (av_stream_handle_t) pv;
@@ -479,6 +520,9 @@ static void _audio_dec(void* pv)
         if (rb_bytes_filled(av_stream->ringbuf_dec) >= av_stream->config.hal.audio_framesize) {
             int pcm_len = rb_read(av_stream->ringbuf_dec, pcm_buf, av_stream->config.hal.audio_framesize, 0);
             char *write_ptr = pcm_buf;
+            // int num_samples = pcm_len / sizeof(int16_t);
+            // float average_db = calculate_average_db((int16_t *)pcm_buf, num_samples);
+            // ESP_LOGI(TAG, "Average dB level: %f dB", average_db);
             write_len = pcm_len;
             if (resample != NULL) {
                 memcpy(resample->rsp_in, pcm_buf, pcm_len);
