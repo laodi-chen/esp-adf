@@ -59,7 +59,13 @@
 #define CODEC_ADC_BITS_PER_SAMPLE (16) /* 16bit */
 #define CODEC_ADC_SAMPLE_RATE     (16000)
 #define RECORD_HARDWARE_AEC       (true)
-#define BOARD_PA_GAIN             (8) /* Power amplifier gain defined by board (dB) */
+
+/* Power amplifier gain defined by board (dB) */
+#if defined(CONFIG_QZ_101)
+#define BOARD_PA_GAIN             (18)
+#elif defined(CONFIG_QZ_102)
+#define BOARD_PA_GAIN             (6)
+#endif
 
 extern audio_hal_func_t AUDIO_CODEC_ES8311_DEFAULT_HANDLE;
 extern audio_hal_func_t AUDIO_CODEC_ES7243_DEFAULT_HANDLE;

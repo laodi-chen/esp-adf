@@ -51,6 +51,11 @@ static const char *TAG = "AV_STREAM";
 
 const int ENCODER_STOPPED_BIT = BIT0;
 
+volatile float current_mic_gain = 1.0;
+volatile bool open_mic_gain = false;
+volatile bool hit_gain = false;
+static TimerHandle_t mic_gain_timer = NULL;
+
 void *alc_handle;
 
 struct _av_stream_handle {
@@ -194,19 +199,6 @@ static int audio_read_cb(audio_element_handle_t el, char *buf, int len, TickType
     return _read_audio(av_stream, buf, len, wait_time);
 }
 
-// 计算分贝函数
-float calculate_db(const int16_t *buffer, size_t len) {
-    if (len == 0) return -INFINITY;  // 防止除以零
-    double sum_db = 0;
-    for (size_t i = 0; i < len; i++) {
-        double sample_val = buffer[i];
-        double sample_db = 20.0 * log10(fabs(sample_val) / 32768.0);
-        sum_db += sample_db;
-    }
-    return (float) (sum_db / len);  // 返回平均分贝值
-}
-
-
 static void _audio_enc(void* pv)
 {
     av_stream_handle_t av_stream = (av_stream_handle_t) pv;
@@ -215,6 +207,7 @@ static void _audio_enc(void* pv)
     char *frame_buf = NULL;
     int len = 0, timeout = 25 / portTICK_PERIOD_MS;
     int16_t *g711_buffer_16 = NULL;
+    float plus_gain = 0.0;
 
     if (av_stream->config.acodec_type == AV_ACODEC_AAC_LC) {
         frame_buf = jpeg_malloc_align(AUDIO_MAX_SIZE, 16);
@@ -232,14 +225,21 @@ static void _audio_enc(void* pv)
             break;
         }
 
-        alc_volume_setup_process(frame_buf, read_len, 1, alc_handle, 300);
+        alc_volume_setup_process(frame_buf, read_len, 1, alc_handle, 150);
 
-        // 调整长度以适应16位样本的数量
-        // int num_samples = read_len / sizeof(int16_t);
-
-        // // 计算平均分贝值
-        // float average_db = calculate_db(g711_buffer_16, num_samples);
-        // ESP_LOGI(TAG, "Average dB level: %f dB", average_db);
+        if (open_mic_gain)
+        {
+            if (hit_gain)
+            {
+                plus_gain = current_mic_gain;
+            } else{
+                plus_gain += 0.01373;
+            }
+            int16_t* samples = (int16_t*) frame_buf;
+            for (int i = 0; i < read_len / 2; i++) {
+                samples[i] = (int16_t)(samples[i] * plus_gain);
+            }
+        }
 
         av_stream_frame_t enc;
         enc.len = read_len;
@@ -285,6 +285,11 @@ static void _audio_enc(void* pv)
     vTaskDelete(NULL);
 }
 
+static void mic_gain_callback(TimerHandle_t xTimer)
+{
+    open_mic_gain = false;
+}
+
 int av_audio_enc_start(av_stream_handle_t av_stream)
 {
     AUDIO_NULL_CHECK(TAG, av_stream, return ESP_ERR_INVALID_ARG);
@@ -293,6 +298,12 @@ int av_audio_enc_start(av_stream_handle_t av_stream)
     }
 
     alc_handle = alc_volume_setup_open();
+
+    if (mic_gain_timer == NULL)
+    {
+        mic_gain_timer = xTimerCreate("mic_gain_timer", pdMS_TO_TICKS(750), pdTRUE, 0, mic_gain_callback);
+        xTimerStart(mic_gain_timer, 0);
+    }
 
     if (av_stream->config.acodec_type == AV_ACODEC_AAC_LC) {
         // esp_aac_enc_config_t aac_cfg = DEFAULT_ESP_AAC_ENC_CONFIG();
@@ -339,7 +350,8 @@ int av_audio_enc_start(av_stream_handle_t av_stream)
         algo_config.debug_input = true;
     #endif
     #if CONFIG_ESP_LYRAT_MINI_V1_1_BOARD
-        algo_config.ref_linear_factor = 3;
+        // algo_config.rec_linear_factor = 10;
+        algo_config.ref_linear_factor = 1;
     #endif
     #if (CONFIG_ESP_LYRAT_MINI_V1_1_BOARD || CONFIG_ESP32_S3_KORVO2_V3_BOARD)
         algo_config.swap_ch = true;
@@ -452,6 +464,14 @@ int av_audio_enc_stop(av_stream_handle_t av_stream)
 
     alc_volume_setup_close(alc_handle);
 
+    if (mic_gain_timer != NULL)
+    {
+        xTimerStop(mic_gain_timer, 0);
+        xTimerDelete(mic_gain_timer, 0);
+        mic_gain_timer = NULL;
+    }
+    
+
     av_stream->aenc_run = false;
     audio_pipeline_stop(av_stream->audio_enc);
     audio_pipeline_wait_for_stop(av_stream->audio_enc);
@@ -520,9 +540,22 @@ static void _audio_dec(void* pv)
         if (rb_bytes_filled(av_stream->ringbuf_dec) >= av_stream->config.hal.audio_framesize) {
             int pcm_len = rb_read(av_stream->ringbuf_dec, pcm_buf, av_stream->config.hal.audio_framesize, 0);
             char *write_ptr = pcm_buf;
-            // int num_samples = pcm_len / sizeof(int16_t);
-            // float average_db = calculate_average_db((int16_t *)pcm_buf, num_samples);
-            // ESP_LOGI(TAG, "Average dB level: %f dB", average_db);
+
+            int num_samples = pcm_len / sizeof(int16_t);
+            float average_db = calculate_average_db((int16_t *)pcm_buf, num_samples);
+            // 使用线性方程 𝑦=𝑚𝑥+𝑏 来表示，我们需要计算斜率 𝑚 和截距 𝑏。
+            if (average_db >= -27)
+            {
+                float m = -0.001;
+                float b = 0;
+                current_mic_gain = m * average_db + b;
+                open_mic_gain = true;
+                hit_gain = true;
+                xTimerReset(mic_gain_timer, 0);
+            }else{
+                hit_gain = false;
+            }
+
             write_len = pcm_len;
             if (resample != NULL) {
                 memcpy(resample->rsp_in, pcm_buf, pcm_len);
