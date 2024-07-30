@@ -61,10 +61,12 @@
 #define RECORD_HARDWARE_AEC       (true)
 
 /* Power amplifier gain defined by board (dB) */
-#if defined(CONFIG_QZ_101)
+#if defined(CONFIG_DEVICE_MODEL_QZ_101)
 #define BOARD_PA_GAIN             (18)
-#elif defined(CONFIG_QZ_102)
+#elif defined(CONFIG_DEVICE_MODEL_QZ_102)
 #define BOARD_PA_GAIN             (6)
+#else
+#define BOARD_PA_GAIN             (20)
 #endif
 
 extern audio_hal_func_t AUDIO_CODEC_ES8311_DEFAULT_HANDLE;
