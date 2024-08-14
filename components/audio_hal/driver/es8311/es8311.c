@@ -487,13 +487,13 @@ esp_err_t es8311_codec_init(audio_hal_codec_config_t *codec_cfg)
     AUDIO_RET_ON_FALSE(TAG, ret, return ret, "es8311 initialize failed");
 
     /* pa power gpio init */
-    gpio_config_t  io_conf;
-    memset(&io_conf, 0, sizeof(io_conf));
-    io_conf.mode = GPIO_MODE_OUTPUT;
-    io_conf.pin_bit_mask = BIT64(get_pa_enable_gpio());
-    io_conf.pull_down_en = 0;
-    io_conf.pull_up_en = 0;
-    gpio_config(&io_conf);
+    // gpio_config_t  io_conf;
+    // memset(&io_conf, 0, sizeof(io_conf));
+    // io_conf.mode = GPIO_MODE_OUTPUT;
+    // io_conf.pin_bit_mask = BIT64(get_pa_enable_gpio());
+    // io_conf.pull_down_en = 0;
+    // io_conf.pull_up_en = 0;
+    // gpio_config(&io_conf);
     /* enable pa power */
     es8311_pa_power(true);
 

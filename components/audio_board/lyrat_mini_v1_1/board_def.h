@@ -64,7 +64,7 @@
 #if defined(CONFIG_DEVICE_MODEL_QZ_101)
 #define BOARD_PA_GAIN             (18)
 #elif defined(CONFIG_DEVICE_MODEL_QZ_102)
-#define BOARD_PA_GAIN             (6)
+#define BOARD_PA_GAIN             (15)
 #else
 #define BOARD_PA_GAIN             (20)
 #endif
