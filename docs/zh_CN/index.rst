@@ -37,6 +37,7 @@
     知识中心 <knowledge-center/index>
     Resources <resources>
     Copyrights <COPYRIGHT>
+    免责声明和版权公告 <disclaimer-and-copyright>
     English-Chinese Glossary <english-chinese-glossary>
     About <about>
 

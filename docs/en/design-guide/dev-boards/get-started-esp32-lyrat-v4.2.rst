@@ -453,3 +453,8 @@ Related Documents
 * :doc:`get-started-esp32-lyrat-v4`
 
 .. _ESP32 LyraT V4.2 schematic: https://dl.espressif.com/dl/schematics/esp32-lyrat-v4.2-schematic.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.

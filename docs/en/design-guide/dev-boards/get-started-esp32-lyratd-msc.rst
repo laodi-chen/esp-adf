@@ -163,3 +163,8 @@ Related Documents
 
 .. _ESP32-LyraTD-MSC V2.2 Schematic Lower Board (A): https://dl.espressif.com/dl/schematics/ESP32-LYRATD-MSC_A_V2.2-20220119.pdf
 .. _ESP32-LyraTD-MSC V2.2 Schematic Upper Board (B): https://dl.espressif.com/dl/schematics/ESP32-LyraTD-MSC_B_V1_1-1109A.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.

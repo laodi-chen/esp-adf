@@ -430,3 +430,8 @@ Related Documents
 
 
 .. _ESP32 LyraT V4.3 schematic: https://dl.espressif.com/dl/schematics/ESP32-LYRAT_V4.3-20220119.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.

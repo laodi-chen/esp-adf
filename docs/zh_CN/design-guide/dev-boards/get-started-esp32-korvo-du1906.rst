@@ -17,6 +17,7 @@ ESP32-Korvo-DU1906
 - `开始开发应用`_：详细介绍了 ESP32-Korvo-DU1906 的开发过程。
 
 - `相关文档`_：列出了相关文档的链接。
+- `免责声明和版权公告`_：链接到免责声明和版权公告。
 
 入门指南
 ---------
@@ -185,3 +186,8 @@ ESP32-Korvo-DU1906 的主要组件和连接方式如下图所示。
 * `ESP32-DU1906 & ESP32-DU1906-U 技术规格书 <https://www.espressif.com/sites/default/files/documentation/esp32-du1906_esp32-du1906-u_datasheet_cn.pdf>`_ (PDF)
 
 .. _ESP32-Korvo-DU1906 原理图: https://dl.espressif.com/dl/schematics/ESP32-Korvo-DU1906-schematics.pdf
+
+免责声明和版权公告
+------------------
+
+请参阅 :doc:`免责声明和版权公告 <../../disclaimer-and-copyright>`。

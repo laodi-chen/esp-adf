@@ -27,6 +27,7 @@ ESP32-S3-Korvo-2 V3.1 主板可与 LCD 扩展板 :doc:`ESP32-S3-Korvo-2-LCD <use
 - `硬件参考`_：详细介绍了开发板的硬件。
 - `硬件版本`_：介绍硬件历史版本和已知问题，并提供链接至历史版本开发板的入门指南（如有）。
 - `相关文档`_：列出了相关文档的链接。
+- `免责声明和版权公告`_：链接到免责声明和版权公告。
 
 
 入门指南
@@ -861,3 +862,8 @@ ESP32-S3-Korvo-2 V3.0
 有关本开发板的更多设计文档，请联系我们的商务部门 `sales@espressif.com <sales@espressif.com>`_。
 
 .. _ESP32-S3-Korvo-2 V3.1 原理图: https://dl.espressif.com/dl/schematics/SCH_ESP32-S3-Korvo-2_V3.1.2_20240116.pdf
+
+免责声明和版权公告
+==================
+
+请参阅 :doc:`免责声明和版权公告 <../../disclaimer-and-copyright>`。

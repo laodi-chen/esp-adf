@@ -36,6 +36,7 @@ This is the documentation for Espressif Audio Development Framework (ESP-ADF).
     Knowledge Center <knowledge-center/index>
     Resources <resources>
     Copyrights <COPYRIGHT>
+    Disclaimer and Copyright Notice <disclaimer-and-copyright>
     English-Chinese Glossary <english-chinese-glossary>
     About <about>
 

@@ -21,6 +21,7 @@ ESP32-S3-Korvo-2-LCD 增配 LCD 图形显示器和电容式触摸屏，扩展了
 - `入门指南`_：简要介绍了开发板和硬件、软件设置指南。
 - `硬件概况`_：详细介绍了开发板的硬件。
 - `相关文档`_：列出了相关文档的链接。
+- `免责声明和版权公告`_：链接到免责声明和版权公告。
 
 
 入门指南
@@ -127,3 +128,8 @@ ESP32-S3-Korvo-2-LCD 的主要组件和连接方式如下图所示。
 - `ESP32-S3-Korvo-2 V3.1 参考设计 <https://documentation.espressif.com/ESP32-S3-Korvo-2_Reference_Design.zip>`_ (ZIP)
 
 有关本开发板的更多设计文档，请联系我们的商务部门 `sales@espressif.com <sales@espressif.com>`_。
+
+免责声明和版权公告
+==================
+
+请参阅 :doc:`免责声明和版权公告 <../../disclaimer-and-copyright>`。
