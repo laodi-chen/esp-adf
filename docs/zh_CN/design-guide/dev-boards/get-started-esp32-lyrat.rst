@@ -162,3 +162,8 @@ ESP32-LyraT 上电之前，请首先确认开发板完好无损。
 
 .. _ESP32 LyraT V4.3 schematic: https://dl.espressif.com/dl/schematics/ESP32-LYRAT_V4.3-20220119.pdf
 .. _ESP32-LyraT V4.3 Component Layout: https://dl.espressif.com/dl/schematics/ESP32-LyraT_v4.3_component_layout.pdf
+
+免责声明和版权公告
+------------------
+
+请参阅 :doc:`免责声明和版权公告 <../../disclaimer-and-copyright>`。

@@ -144,3 +144,8 @@ Related Documents
 
 
 .. _ESP32-LyraT-Mini V1.2 schematic: https://dl.espressif.com/dl/schematics/SCH_ESP32-LyraT-Mini_V1.2_20220119.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.

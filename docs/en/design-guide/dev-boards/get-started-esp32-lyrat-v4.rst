@@ -426,3 +426,8 @@ Related Documents
 * `JTAG Debugging <https://esp-idf.readthedocs.io/en/latest/api-guides/jtag-debugging/index.html>`_
 
 .. _ESP32 LyraT V4 schematic: https://dl.espressif.com/dl/schematics/esp32-lyrat-v4-schematic.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.

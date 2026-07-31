@@ -143,3 +143,8 @@ ESP32-LyraT-Mini 上电之前，请首先确认开发板完好无损。
 
 
 .. _ESP32-LyraT-Mini V1.2 原理图: https://dl.espressif.com/dl/schematics/SCH_ESP32-LyraT-Mini_V1.2_20220119.pdf
+
+免责声明和版权公告
+------------------
+
+请参阅 :doc:`免责声明和版权公告 <../../disclaimer-and-copyright>`。

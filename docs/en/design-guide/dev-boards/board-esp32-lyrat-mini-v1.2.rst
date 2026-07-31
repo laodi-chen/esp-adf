@@ -273,3 +273,8 @@ Related Documents
 .. _ESP32-LyraT-Mini V1.2 schematic: https://dl.espressif.com/dl/schematics/SCH_ESP32-LyraT-Mini_V1.2_20220119.pdf
 .. _ES8311: http://www.everest-semi.com/pdf/ES8311%20PB.pdf
 .. _ES7243: http://www.everest-semi.com/pdf/ES7243%20PB.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.

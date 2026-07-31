@@ -162,3 +162,8 @@ ESP32-LyraTD-MSC 上电之前，请首先确认开发板完好无损，且上板
 
 .. _ESP32-LyraTD-MSC V2.2 Schematic Lower Board (A): https://dl.espressif.com/dl/schematics/ESP32-LYRATD-MSC_A_V2.2-20220119.pdf
 .. _ESP32-LyraTD-MSC V2.2 Schematic Upper Board (B): https://dl.espressif.com/dl/schematics/ESP32-LyraTD-MSC_B_V1_1-1109A.pdf
+
+免责声明和版权公告
+------------------
+
+请参阅 :doc:`免责声明和版权公告 <../../disclaimer-and-copyright>`。

@@ -19,6 +19,7 @@ The document consists of the following major sections:
 - `Getting Started`_: Provides an overview of the ESP32-Korvo-DU1906 and hardware/software setup instructions to get started.
 - `Start Application Development`_: Provides more detailed information about the ESP32-Korvo-DU1906's application development process.
 - `Related Documents`_: Gives links to related documentation.
+- `Disclaimer and Copyright Notice`_: Link to the disclaimer and copyright notice.
 
 
 Getting Started
@@ -187,3 +188,8 @@ Related Documents
 * `ESP32 Datasheet <https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf>`_ (PDF)
 
 .. _ESP32-Korvo-DU1906 Schematic: https://dl.espressif.com/dl/schematics/ESP32-Korvo-DU1906-schematics.pdf
+
+Disclaimer and Copyright Notice
+-------------------------------
+
+See :doc:`Disclaimer and Copyright Notice <../../disclaimer-and-copyright>`.
